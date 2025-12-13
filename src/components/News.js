@@ -24,7 +24,7 @@ export class News extends Component {
       totalResults: 0,
       nextPage: null,
     };
-    document.title = `${this.props.category} + NewsMonkey`;
+    document.title = `IndiaNews - ${this.props.category}`;
   }
 
   async updateNews() {
@@ -34,8 +34,6 @@ export class News extends Component {
 
     let data = await fetch(url);
     let parsedData = await data.json();
-
-    console.log(parsedData); // always inspect this
 
     let results = Array.isArray(parsedData.results)? parsedData.results: parsedData.results? [parsedData.results]: [];
 
@@ -141,7 +139,16 @@ export class News extends Component {
 }
 
 export function NewsWrapper(props) {
-  const params = useParams();
-  return <News {...props} country={params.code} />;
+  const { country, category } = useParams();
+
+  return (
+    <News
+      {...props}
+      country={country}
+      category={category}
+      key={`${country}-${category}`}
+    />
+  );
 }
+
 export default NewsWrapper;

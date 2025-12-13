@@ -18,14 +18,14 @@ export class NewsItem extends Component {
           >
             Read More
           </a>
-          <p class="card-text mt-2">
-            <small class="text-body-secondary">
+          <p className="card-text mt-2">
+            <small className="text-body-secondary">
               By {author} on {publishedAt}
             </small>
           </p>
-          <span class="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-danger">
+          <span className="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-danger">
             {source}
-            <span class="visually-hidden">unread messages</span>
+            <span className="visually-hidden">unread messages</span>
           </span>
         </div>
       </div>

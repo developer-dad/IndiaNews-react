@@ -1,138 +1,87 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, useParams } from "react-router-dom";
 
-export default class NavBar extends Component {
-  render() {
-    return (
-      <div>
-        <nav
-          className="navbar fixed-top navbar-expand-lg bg-body-tertiary bg-dark"
-          data-bs-theme="dark"
+export default function NavBar() {
+  const { country = "in", category = "top" } = useParams();
+
+  return (
+    <nav className="navbar fixed-top navbar-expand-lg bg-dark" data-bs-theme="dark">
+      <div className="container-fluid d-flex">
+        <Link className="navbar-brand" to={`/${country}/${category}`}>
+          IndiaNews
+        </Link>
+
+        <div>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarContent"
+          aria-controls="navbarContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
         >
-          <div className="container-fluid">
-            <Link className="navbar-brand" to="/top">
-              IndiaNews
-            </Link>
-            <button
-              className="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="navbar-toggler-icon"></span>
-            </button>
-            <div
-              className="collapse navbar-collapse"
-              id="navbarSupportedContent"
-            >
-              <ul className="navbar-nav mb-2 mb-lg-0">
-                <li className="nav-item dropdown">
-                  <Link
-                    className="nav-link dropdown-toggle"
-                    to="/top"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    Category
-                  </Link>
-                  <ul className="dropdown-menu">
-                    <li>
-                      <Link className="dropdown-item" to="/business">
-                        Business
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/entertainment">
-                        Entertainment
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/top">
-                      General
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/health">
-                        Health
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/science">
-                        Science
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/sports">
-                        Sports
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/technology">
-                        Technology
-                      </Link>
-                    </li>
-                  </ul>
-                </li>
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarContent">
+          <ul className="navbar-nav me-3">
+            <li className="nav-item dropdown">
+              <span
+                className="nav-link dropdown-toggle"
+                role="button"
+                data-bs-toggle="dropdown"
+              >
+                Category
+              </span>
+              <ul className="dropdown-menu">
+                {[
+                  "top",
+                  "business",
+                  "entertainment",
+                  "health",
+                  "science",
+                  "sports",
+                  "technology",
+                ].map((cat) => (
+                  <li key={cat}>
+                    <Link className="dropdown-item" to={`/${country}/${cat}`}>
+                      {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                    </Link>
+                  </li>
+                ))}
               </ul>
-              <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                <li className="nav-item dropdown">
-                  <Link
-                    className="nav-link dropdown-toggle"
-                    to="/top"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    Country
-                  </Link>
-                  <ul className="dropdown-menu">
-                    <li>
-                      <Link className="dropdown-item" to="/country/in">
-                        India
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/country/us">
-                        USA
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/country/cn">
-                        China
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/country/ru">
-                        Russia
-                      </Link>
-                    </li>
-                    <li>
-                      <Link className="dropdown-item" to="/country/gb">
-                        UK
-                      </Link>
-                    </li>
-                  </ul>
-                </li>
+            </li>
+          </ul>
+
+          <ul className="navbar-nav">
+            <li className="nav-item dropdown">
+              <span
+                className="nav-link dropdown-toggle"
+                role="button"
+                data-bs-toggle="dropdown"
+              >
+                Country
+              </span>
+              <ul className="dropdown-menu">
+                {[
+                  { code: "in", name: "India" },
+                  { code: "us", name: "USA" },
+                  { code: "ru", name: "Russia" },
+                  { code: "gb", name: "UK" },
+                  { code: "cn", name: "China" },
+                ].map((c) => (
+                  <li key={c.code}>
+                    <Link className="dropdown-item" to={`/${c.code}/${category}`}>
+                      {c.name}
+                    </Link>
+                  </li>
+                ))}
               </ul>
-              <form className="d-flex" role="search">
-                <input
-                  className="form-control me-2"
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                />
-                <button className="btn btn-outline-light" type="submit">
-                  Search
-                </button>
-              </form>
-            </div>
+            </li>
+          </ul>
           </div>
-        </nav>
+        </div>
       </div>
-    );
-  }
+    </nav>
+  );
 }
