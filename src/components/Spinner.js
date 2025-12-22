@@ -1,11 +1,23 @@
 import React, { Component } from "react";
+import "./css/Spinner.css";
 
 export default class Spinner extends Component {
   render() {
     return (
-      <div className="text-center my-2">
-        <div className="spinner-border" role="status">
-          <span className="visually-hidden">Loading...</span>
+      <div className="spinner-container">
+        <div className="apple-spinner">
+          <div className="spinner-blade"></div>
+          <div className="spinner-blade"></div>
+          <div className="spinner-blade"></div>
+          <div className="spinner-blade"></div>
+          <div className="spinner-blade"></div>
+          <div className="spinner-blade"></div>
+          <div className="spinner-blade"></div>
+          <div className="spinner-blade"></div>
+          <div className="spinner-blade"></div>
+          <div className="spinner-blade"></div>
+          <div className="spinner-blade"></div>
+          <div className="spinner-blade"></div>
         </div>
       </div>
     );
