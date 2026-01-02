@@ -87,7 +87,7 @@ export class News extends Component {
 
   render() {
     return (
-      <div className="container pt-5">
+      <div className="container pt-5 px-3">
         <h2 style={{ fontSize: "50px", margin: "30px 0px" }}>
           IndiaNews - Top {this.props.category} HeadLines
         </h2>
@@ -116,11 +116,7 @@ export class News extends Component {
                           ? element.description.slice(0, 93)
                           : " "
                       }
-                      imageUrl={
-                        element.image_url
-                          ? element.image_url
-                          : "https://img.freepik.com/vector-premium/vector-icono-imagen-predeterminado-pagina-imagen-faltante-diseno-sitio-web-o-aplicacion-movil-no-hay-foto-disponible_87543-11093.jpg"
-                      }
+                      imageUrl={element.image_url}
                       url={element.link ? element.link : "/"}
                       author={
                         element.source_name ? element.source_name : "Unknown"

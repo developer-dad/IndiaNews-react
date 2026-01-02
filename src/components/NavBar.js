@@ -23,7 +23,7 @@ export default function NavBar() {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarContent">
+        <div className="collapse navbar-collapse d-flex justify-content-center" id="navbarContent">
           <ul className="navbar-nav me-3">
             <li className="nav-item dropdown">
               <span
