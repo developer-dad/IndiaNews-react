@@ -71,32 +71,43 @@ export default function NavBar() {
           <span className="logo-text">IndiaNews</span>
         </Link>
 
-        <div className={`navbar-links ${mobileMenuOpen ? 'mobile-open' : ''}`}>
-          <div
-            className="nav-dropdown"
-            onMouseEnter={() => !isMobile && setCategoryOpen(true)}
-            onMouseLeave={() => !isMobile && setCategoryOpen(false)}
-          >
-            <button
-              className="nav-link"
-              onClick={handleCategoryClick}
-            >
-              {category.charAt(0).toUpperCase() + category.slice(1)}
-              <svg className={`chevron ${categoryOpen ? 'open' : ''}`} viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-              </svg>
-            </button>
-            {categoryOpen && (
-              <div className="dropdown-panel">
-                {categories.map((cat) => (
-                  <Link
-                    key={cat}
-                    className={`dropdown-link ${category === cat ? 'active' : ''}`}
-                    to={`/${country}/${cat}`}
-                    onClick={handleLinkClick}
-                  >
-                    {cat.charAt(0).toUpperCase() + cat.slice(1)}
-                  </Link>
+        <div>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarContent"
+          aria-controls="navbarContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse d-flex justify-content-center" id="navbarContent">
+          <ul className="navbar-nav me-3">
+            <li className="nav-item dropdown">
+              <span
+                className="nav-link dropdown-toggle"
+                role="button"
+                data-bs-toggle="dropdown"
+              >
+                Category
+              </span>
+              <ul className="dropdown-menu">
+                {[
+                  "top",
+                  "business",
+                  "entertainment",
+                  "health",
+                  "science",
+                  "sports",
+                  "technology",
+                ].map((cat) => (
+                  <li key={cat}>
+                    <Link className="dropdown-item" to={`/${country}/${cat}`}>
+                      {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                    </Link>
+                  </li>
                 ))}
               </div>
             )}
