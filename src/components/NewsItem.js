@@ -50,7 +50,7 @@ export class NewsItem extends Component {
             <span className="visually-hidden">unread messages</span>
           </span>
         </div>
-      </div>
+      </article>
     );
   }
 }

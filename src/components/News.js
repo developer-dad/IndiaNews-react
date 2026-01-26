@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import NewsItem from "./NewsItem";
 import Spinner from "./Spinner";
+import NewsModal from "./NewsModal";
+import BackToTop from "./BackToTop";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useParams } from "react-router-dom";
+import "./css/News.css";
 
 export class News extends Component {
   static defaultProps = {
@@ -23,6 +26,7 @@ export class News extends Component {
       loading: false,
       totalResults: 0,
       nextPage: null,
+      selectedArticle: null,
     };
     document.title = `IndiaNews - ${this.props.category}`;
   }
@@ -50,40 +54,33 @@ export class News extends Component {
     this.updateNews();
   }
 
-  // handlePrevClick = async () => {
-  //   this.setState({
-  //     page: this.state.page - 1,
-  //   });
-  //   this.updateNews();
-  // };
-
-  // handleNextClick = async () => {
-  //   this.setState({
-  //     page: this.state.page + 1,
-  //   });
-  //   this.updateNews();
-  // };
-
   fetchMoreData = async () => {
-  const { nextPage } = this.state;
+    const { nextPage } = this.state;
 
-  if (!nextPage) {
-    this.setState({ hasMore: false });
-    return;
-  }
+    if (!nextPage) {
+      this.setState({ hasMore: false });
+      return;
+    }
 
-  let url = `https://newsdata.io/api/1/latest?apikey=${this.props.apiKey}&country=${this.props.country}&category=${this.props.category}&page=${nextPage}&language=en`;
+    let url = `https://newsdata.io/api/1/latest?apikey=${this.props.apiKey}&country=${this.props.country}&category=${this.props.category}&page=${nextPage}&language=en`;
 
-  let data = await fetch(url);
-  let parsedData = await data.json();
+    let data = await fetch(url);
+    let parsedData = await data.json();
 
-  this.setState({
-    results: [...this.state.results, ...parsedData.results],
-    nextPage: parsedData.nextPage,
-    hasMore: parsedData.nextPage !== null
-  });
-};
+    this.setState({
+      results: [...this.state.results, ...parsedData.results],
+      nextPage: parsedData.nextPage,
+      hasMore: parsedData.nextPage !== null
+    });
+  };
 
+  handleOpenModal = (article) => {
+    this.setState({ selectedArticle: article });
+  };
+
+  handleCloseModal = () => {
+    this.setState({ selectedArticle: null });
+  };
 
   render() {
     return (
@@ -121,15 +118,28 @@ export class News extends Component {
                       author={
                         element.source_name ? element.source_name : "Unknown"
                       }
+                      url={element.link || "/"}
+                      author={element.source_name || "Unknown"}
                       publishedAt={element.pubDate}
                       source={element.source_id}
+                      content={element.content}
+                      onOpenModal={this.handleOpenModal}
                     />
-                  </div>
-                );
-              })}
-          </div>
-        </InfiniteScroll>
-      </div>
+                  );
+                })}
+            </div>
+          </InfiniteScroll>
+        </div>
+
+        <BackToTop />
+
+        {this.state.selectedArticle && (
+          <NewsModal 
+            article={this.state.selectedArticle} 
+            onClose={this.handleCloseModal}
+          />
+        )}
+      </>
     );
   }
 }
